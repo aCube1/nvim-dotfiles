@@ -7,7 +7,7 @@ lualine.setup({
 	options = {
 		icons_enabled = vim.g.icons_enabled,
 		global_status = true,
-		theme = vim.g.colors_name or "auto",
+		theme = "catppuccin",
 		component_separators = { left = '', right = '' },
 		section_separators = { left = '', right = '' },
 		disabled_filetypes = { 'dashboard', 'NvimTree', 'packer' },

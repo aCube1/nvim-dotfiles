@@ -31,8 +31,7 @@ else
   maps.n["<S-Tab>"] = { "<cmd>bprevious<cr>", desc = "Previous buffer" }
 end
 
-utils.register_keys(maps)
---[[
+-- [[
 for mode, keymaps in pairs(maps) do
 	for keymap, options in pairs(keymaps) do
 		if options then

@@ -8,10 +8,10 @@ utils.compile_path = stdpath("data") .. "/site/plugin/packer_compiled.lua"
 utils.package_root = stdpath("data") .. "/site/pack"
 
 function utils.safe_require(path)
-	local ok, module = pcall(require, path)
-	if not ok then
+	local status_ok, module = pcall(require, path)
+	if not status_ok then
 		vim.notify(string.format("Error loading: %s", module), vim.log.levels.ERROR)
-		return ok
+		return status_ok
 	end
 
 	return module
@@ -80,9 +80,4 @@ end
 
 function utils.initialize_icons()
 	utils.icons = require("core.icons")
-end
-
-function utils.get_icon(kind)
-	if not utils.icons then utils.initialize_icons() end
-	return utils.icons and utils.icons[kind] or ""
 end

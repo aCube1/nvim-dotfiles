@@ -1,8 +1,8 @@
 local bufferline = require("bufferline")
 
 local close_fn = function(bufnum)
-	local bufdelete_avail, bufdelete = pcall(require, "bufdelete")
-	if bufdelete_avail then
+	local bufdelete = utils.safe_require("bufdelete")
+	if bufdelete then
 		bufdelete.bufdelete(bufnum, true)
 	else
 		vim.cmd["bdelete!"]({ args = { bufnum } })
@@ -16,9 +16,9 @@ bufferline.setup({
 			{ filetype = "neo-tree", text = "", padding = 1 },
 			{ filetype = "Outline", text = "", padding = 1 },
 		},
-		buffer_close_icon = utils.get_icon("BufferClose"),
-		modified_icon = utils.get_icon("FileModified"),
-		close_icon = utils.get_icon("NeovimClose"),
+		buffer_close_icon = "",
+		modified_icon = "",
+		close_icon = "",
 		close_command = close_func,
 		right_mouse_command = close_func,
 		max_name_length = 14,

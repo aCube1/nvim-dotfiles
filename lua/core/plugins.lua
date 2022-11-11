@@ -2,6 +2,24 @@ local plugins = {
 	-- Optimiser
 	{ "lewis6991/impatient.nvim" },
 
+  	-- Rich presence
+  	{
+  		"andweeb/presence.nvim",
+		config = function()
+			require("presence"):setup()
+		end,
+  	},
+
+	-- Theme
+	{
+		"catppuccin/nvim",
+		as = "catppuccin",
+		config = function()
+			require("catppuccin").setup({ flavour = "mocha" })
+			vim.api.nvim_command("colorscheme catppuccin")
+		end,
+	},
+
 	-- Lua functions
 	{
 		"nvim-lua/plenary.nvim",
@@ -18,14 +36,14 @@ local plugins = {
 	{
 		"rcarriga/nvim-notify",
 		event = "UIEnter",
-		config = function() require "configs.notify" end,
+		config = function() require("configs.notify") end,
 	},
 
 	-- Neovim UI Enhancer
 	{
 		"stevearc/dressing.nvim",
 		event = "UIEnter",
-		config = function() require "configs.dressing" end,
+		config = function() require("configs.dressing") end,
 	},
 
 	 -- Better buffer closing
@@ -38,7 +56,7 @@ local plugins = {
 		"s1n7ax/nvim-window-picker",
 		tag = "v1.*",
 		module = "window-picker",
-		config = function() require "configs.window-picker" end,
+		config = function() require("configs.window-picker") end,
 	},
 
 	-- Icons
@@ -46,14 +64,13 @@ local plugins = {
 		"nvim-tree/nvim-web-devicons",
 		disable = not vim.g.icons_enabled,
 		module = "nvim-web-devicons",
-		config = function() require "configs.nvim-web-devicons" end,
+		config = function() require("configs.nvim-web-devicons") end,
 	},
 	-- LSP Icons
 	{
 		"onsails/lspkind.nvim",
-		disable = not vim.g.icons_enabled,
 		module = "lspkind",
-		config = function() require "configs.lspkind" end,
+		config = function() require("configs.lspkind") end,
 	},
 
 	-- Bufferline
@@ -61,7 +78,7 @@ local plugins = {
 		"akinsho/bufferline.nvim",
 		module = "bufferline",
 		event = "UIEnter",
-		config = function() require "configs.bufferline" end,
+		config = function() require("configs.bufferline") end,
 	},
 	-- File explorer
 	{
@@ -71,20 +88,21 @@ local plugins = {
 		cmd = "Neotree",
 		requires = { { "MunifTanjim/nui.nvim", module = "nui" } },
 		setup = function() vim.g.neo_tree_remove_legacy_commands = true end,
-		config = function() require "configs.neo-tree" end,
+		config = function() require("configs.neo-tree") end,
 	},
 
 	-- Statusline
 	{
 		"nvim-lualine/lualine.nvim",
-		config = function() require "configs.lualine" end
+		config = function() require("configs.lualine") end
 	},
 	
 	-- Keymaps popup
 	{
 		"folke/which-key.nvim",
+		event = "BufWinEnter",
 		module = "which-key",
-		config = function() require "configs.which-key" end,
+		config = function() require("configs.which-key") end,
 	},
 
 	-- Syntax highlighting
@@ -92,18 +110,37 @@ local plugins = {
 		"nvim-treesitter/nvim-treesitter",
 		run = function() require("nvim-treesitter.install").update { with_sync = true }() end,
 		event = "BufEnter",
-		config = function() require "configs.treesitter" end,
+		config = function() require("configs.treesitter") end,
 	},
+	-- Parenthesis highlighting
+	{ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" },
+	-- Autoclose tags
+	{ "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
+	-- Context based commenting
+	{ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
+
+	-- Snippet collection
+	{ "rafamadriz/friendly-snippets", opt = true },
+
+	-- Snippet engine
+	{
+		"L3MON4D3/LuaSnip",
+		module = "luasnip",
+		wants = "friendly-snippets",
+		config = function() require("configs.luasnip") end,
+	},
+
 	-- Git integration
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufEnter",
-		config = function() require "configs.gitsigns" end,
+		config = function() require("configs.gitsigns") end,
 	},
+	
 	-- Package Manager
   	{
   		"williamboman/mason.nvim",
-  		config = function() require "configs.mason" end,
+  		config = function() require("configs.mason") end,
   	},
 }
 
@@ -125,6 +162,7 @@ if packer then
 
 	packer.startup(function(use)
 		use("wbthomason/packer.nvim") -- Install by default
+
 		for _, plugin in ipairs(plugins) do
 			use(plugin)
 		end

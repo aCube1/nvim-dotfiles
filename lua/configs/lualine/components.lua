@@ -1,7 +1,7 @@
 -- Default components
 
 local conditions = require("configs.lualine.conditions")
-local colors = require("default_theme.colors")
+local colors = require("catppuccin.palettes").get_palette()
 
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
