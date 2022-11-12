@@ -15,13 +15,4 @@ if which_key then
 			filetypes = { "TelescopePrompt" }
 		},
 	})	
-
-	which_key.register({
-		["<leader>"] = {
-			f = { name = "File" },
-			p = { name = "Packages" },
-			l = { name = "LSP" },
-			u = { name = "UI" },
-		},
-	})
 end

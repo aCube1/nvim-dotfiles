@@ -66,7 +66,14 @@ function utils.register_keys(maps, options)
 	end
 end
 
-function utils.default_table(options, table)
+-- Call function if condition is met
+function utils.conditional_function(func, condition, ...)
+	if (condition == nil or condition) and type(func) == "function" then
+		return func(...)
+	end
+end
+
+function utils.default_table(options, default)
 	options = options or {}
 	return default and vim.tbl_deep_extend("force", default, options) or options
 end

@@ -1,5 +1,6 @@
 local cmd = vim.cmd
 
+-- Reload config
 cmd([[
 	augroup packer_config
 		autocmd!

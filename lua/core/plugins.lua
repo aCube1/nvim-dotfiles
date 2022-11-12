@@ -80,6 +80,7 @@ local plugins = {
 		event = "UIEnter",
 		config = function() require("configs.bufferline") end,
 	},
+
 	-- File explorer
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -129,7 +130,32 @@ local plugins = {
 		wants = "friendly-snippets",
 		config = function() require("configs.luasnip") end,
 	},
+	
+	-- Commenting
+	{
+		"numToStr/Comment.nvim",
+		module = { "Comment", "Comment.api" },
+		keys = { "gc", "gb" },
+		config = function() require "configs.comment" end,
+	},
 
+	-- Fuzzy finder
+	{
+		"nvim-telescope/telescope.nvim",
+		cmd = "Telescope",
+		module = "telescope",
+		config = function() require "configs.telescope" end,
+	},
+
+	-- Fuzzy finder syntax support
+	{
+		"nvim-telescope/telescope-fzf-native.nvim",
+		after = "telescope.nvim",
+		disable = vim.fn.executable "make" == 0,
+		run = "make",
+		config = function() require("telescope").load_extension "fzf" end,
+	},
+	
 	-- Git integration
 	{
 		"lewis6991/gitsigns.nvim",
