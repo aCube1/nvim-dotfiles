@@ -25,6 +25,7 @@ o.tabstop = 4
 o.preserveindent = true
 o.timeoutlen = 300 -- Length of time to wait for mapped sequence
 o.clipboard = "unnamedplus" -- Use system clipboard
+o.whichwrap:append("<,>,[,],h,l") -- I like this one (Ignore this comment)
 
 -- [[ Popup ]]
 o.pumheight = 10 -- Height of popup menu
@@ -63,7 +64,7 @@ o.shortmess = o.shortmess + {
 g.highlighturl_enabled = true -- Highlight urls by default
 g.mapleader = " "
 g.icons_enabled = true
--- [[ Disable plguins ]]
+-- [[ Disable plugins ]]
 g.loaded_2html_plugin = true -- disable 2html
 g.loaded_getscript = true -- disable getscript
 g.loaded_getscriptPlugin = true -- disable getscript

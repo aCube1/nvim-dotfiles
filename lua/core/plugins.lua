@@ -170,27 +170,4 @@ local plugins = {
   	},
 }
 
-utils.check_packer()
-
-local packer = utils.safe_require("packer")
-if packer then
-	packer.init({
-		compile_path = utils.compile_path,
-		package_root = utils.package_root,
-		display = {
-			open_fn = function()
-				return require("packer.util").float({ border = "rounded" })
-			end,
-		},
-		auto_clean = true,
-		compile_on_sync = true,
-	})
-
-	packer.startup(function(use)
-		use("wbthomason/packer.nvim") -- Install by default
-
-		for _, plugin in ipairs(plugins) do
-			use(plugin)
-		end
-	end)
-end
+return plugins

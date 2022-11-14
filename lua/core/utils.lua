@@ -1,11 +1,4 @@
-local stdpath = vim.fn.stdpath
-
 _G.utils = {}
-
-local install_path = stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-
-utils.compile_path = stdpath("data") .. "/site/plugin/packer_compiled.lua"
-utils.package_root = stdpath("data") .. "/site/pack"
 
 function utils.safe_require(path)
 	local status_ok, module = pcall(require, path)
@@ -73,16 +66,16 @@ function utils.conditional_function(func, condition, ...)
 	end
 end
 
+function utils.echo(messages)
+	local messages = messages or { { "\n" } }
+	if type(messages) == "table" then
+		vim.api.nvim_echo(messages, false, {})
+	end
+end
+
 function utils.default_table(options, default)
 	options = options or {}
 	return default and vim.tbl_deep_extend("force", default, options) or options
-end
-
-function utils.check_packer()
-	if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-		vim.fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-		vim.cmd("packadd packer.nvim")
-	end
 end
 
 function utils.initialize_icons()
