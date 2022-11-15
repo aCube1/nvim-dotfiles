@@ -13,7 +13,6 @@ end
 function utils.is_plugin_available(plugin)
 	return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
 end
-
 -- Get highlight properties for given highlight name
 function utils.get_hlgroup(name, fallback)
 	if vim.fn.hlexists(name) == 1 then

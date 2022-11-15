@@ -1,6 +1,5 @@
 local plugins = {
-	-- Optimiser
-	{ "lewis6991/impatient.nvim" },
+	{ "lewis6991/impatient.nvim" }, -- Optimiser
 
   	-- Rich presence
   	{
@@ -9,6 +8,13 @@ local plugins = {
 			require("presence"):setup()
 		end,
   	},
+
+	-- Color highlighting
+	{
+		"NvChad/nvim-colorizer.lua",
+		event = on_file_open,
+		config = function() require("configs.colorizer") end,
+	},
 
 	-- Theme
 	{
@@ -20,17 +26,9 @@ local plugins = {
 		end,
 	},
 
-	-- Lua functions
-	{
-		"nvim-lua/plenary.nvim",
-		module = "plenary"
-	},
+	{ "nvim-lua/plenary.nvim", module = "plenary" }, -- Lua functions
 
-	-- Indent detection
-	{
-		"Darazaki/indent-o-matic",
-		event = "BufEnter"
-	},
+	{ "Darazaki/indent-o-matic", event = "BufEnter" }, -- Indent detection
 
 	-- Notification Enhancer
 	{
@@ -113,15 +111,11 @@ local plugins = {
 		event = "BufEnter",
 		config = function() require("configs.treesitter") end,
 	},
-	-- Parenthesis highlighting
-	{ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" },
-	-- Autoclose tags
-	{ "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
-	-- Context based commenting
-	{ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
+	{ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" }, -- Parenthesis highlighting
+	{ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }, -- Autoclose tags
+	{ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" }, -- Context based commenting
 
-	-- Snippet collection
-	{ "rafamadriz/friendly-snippets", opt = true },
+	{ "rafamadriz/friendly-snippets", opt = true }, -- Snippet collection
 
 	-- Snippet engine
 	{
@@ -130,13 +124,32 @@ local plugins = {
 		wants = "friendly-snippets",
 		config = function() require("configs.luasnip") end,
 	},
-	
+
+	-- Completion engine
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		config = function() require("configs.cmp") end,
+	},
+	{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" }, -- Snippet completion source
+	{ "hrsh7th/cmp-buffer", after = "nvim-cmp" }, -- Buffer completion source
+	{ "hrsh7th/cmp-cmdline", after = "nvim-cmp" }, -- CmdLine completion source
+	{ "hrsh7th/cmp-path", after = "nvim-cmp" }, -- Path completion source
+	{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }, -- LSP completion source
+	{
+		"tzachar/cmp-tabnine",
+		run = "./install.sh",
+		requires = "hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		after = "nvim-cmp",
+    },
+
 	-- Commenting
 	{
 		"numToStr/Comment.nvim",
 		module = { "Comment", "Comment.api" },
 		keys = { "gc", "gb" },
-		config = function() require "configs.comment" end,
+		config = function() require("configs.comment") end,
 	},
 
 	-- Fuzzy finder
@@ -144,14 +157,14 @@ local plugins = {
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
 		module = "telescope",
-		config = function() require "configs.telescope" end,
+		config = function() require("configs.telescope") end,
 	},
 
 	-- Fuzzy finder syntax support
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		after = "telescope.nvim",
-		disable = vim.fn.executable "make" == 0,
+		disable = vim.fn.executable("make") == 0,
 		run = "make",
 		config = function() require("telescope").load_extension "fzf" end,
 	},
