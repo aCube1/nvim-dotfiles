@@ -1,13 +1,30 @@
+local on_file_open = { "BufRead", "BufWinEnter", "BufNewFile" }
+
 local plugins = {
 	{ "lewis6991/impatient.nvim" }, -- Optimiser
+  	{ "andweeb/presence.nvim", config = function() require("presence"):setup() end }, -- Rich presence
+	{ "nvim-lua/plenary.nvim", module = "plenary" }, -- Lua functions
+	{ "Darazaki/indent-o-matic", event = "BufEnter" }, -- Indent detection
+	{ "nvim-lualine/lualine.nvim", config = function() require("configs.lualine") end }, -- Statusline
 
-  	-- Rich presence
-  	{
-  		"andweeb/presence.nvim",
-		config = function()
-			require("presence"):setup()
-		end,
-  	},
+  	{ "p00f/clangd_extensions.nvim" }, -- Clang extensions
+  	{ "ntpeters/vim-better-whitespace" }, -- Trailing spaces
+
+	{ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" }, -- Parenthesis highlighting
+	{ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }, -- Autoclose tags
+	{ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" }, -- Context based commenting
+	{ "rafamadriz/friendly-snippets", opt = true }, -- Snippet collection
+
+	{ "neovim/nvim-lspconfig", config = function() require("configs.lspconfig") end }, -- Native LSP
+  	{ "williamboman/mason.nvim", config = function() require("configs.mason") end }, -- Package Manager
+	{ "jayp0521/mason-null-ls.nvim", after = "null-ls.nvim", config = function() require "configs.mason-null-ls" end }, -- null-ls manager
+	{ "stevearc/aerial.nvim", module = "aerial", config = function() require "configs.aerial" end }, -- LSP symbols
+	-- LSP manager
+	{
+		"williamboman/mason-lspconfig.nvim",
+		after = "nvim-lspconfig",
+		config = function() require "configs.mason-lspconfig" end,
+	},
 
 	-- Color highlighting
 	{
@@ -25,10 +42,6 @@ local plugins = {
 			vim.api.nvim_command("colorscheme catppuccin")
 		end,
 	},
-
-	{ "nvim-lua/plenary.nvim", module = "plenary" }, -- Lua functions
-
-	{ "Darazaki/indent-o-matic", event = "BufEnter" }, -- Indent detection
 
 	-- Notification Enhancer
 	{
@@ -90,12 +103,6 @@ local plugins = {
 		config = function() require("configs.neo-tree") end,
 	},
 
-	-- Statusline
-	{
-		"nvim-lualine/lualine.nvim",
-		config = function() require("configs.lualine") end
-	},
-	
 	-- Keymaps popup
 	{
 		"folke/which-key.nvim",
@@ -107,15 +114,10 @@ local plugins = {
 	-- Syntax highlighting
 	{
 		"nvim-treesitter/nvim-treesitter",
-		run = function() require("nvim-treesitter.install").update { with_sync = true }() end,
+		run = function() require("nvim-treesitter.install").update({ with_sync = true })() end,
 		event = "BufEnter",
 		config = function() require("configs.treesitter") end,
 	},
-	{ "p00f/nvim-ts-rainbow", after = "nvim-treesitter" }, -- Parenthesis highlighting
-	{ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }, -- Autoclose tags
-	{ "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" }, -- Context based commenting
-
-	{ "rafamadriz/friendly-snippets", opt = true }, -- Snippet collection
 
 	-- Snippet engine
 	{
@@ -152,7 +154,7 @@ local plugins = {
 		config = function() require("configs.comment") end,
 	},
 
-	-- Fuzzy finder
+	-- Fuzzy finder (ripgrep required)
 	{
 		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
@@ -166,21 +168,22 @@ local plugins = {
 		after = "telescope.nvim",
 		disable = vim.fn.executable("make") == 0,
 		run = "make",
-		config = function() require("telescope").load_extension "fzf" end,
+		config = function() require("telescope").load_extension("fzf") end,
 	},
-	
+
 	-- Git integration
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufEnter",
 		config = function() require("configs.gitsigns") end,
 	},
-	
-	-- Package Manager
-  	{
-  		"williamboman/mason.nvim",
-  		config = function() require("configs.mason") end,
-  	},
+
+	-- Formatting and linting
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		event = on_file_open,
+		config = function() require("configs.null-ls") end,
+	},
 }
 
 return plugins

@@ -1,6 +1,5 @@
 local lualine = require("lualine")
 
-local colors = require("default_theme.colors")
 local components = require("configs.lualine.components")
 
 lualine.setup({

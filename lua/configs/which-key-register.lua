@@ -11,12 +11,7 @@ local mappings = {
 	},
 }
 
-if is_plugin_available("gitsigns.nvim") then
-	mappings.n["<leader>"].g = { name = "Git" }
-end
-
-if is_plugin_available("telescope.nvim") then
-	mappings.n["<leader>"].s = { name = "Search" }
+if is_plugin_available("gitsigns.nvim") or is_plugin_available("telescope.nvim") then
 	mappings.n["<leader>"].g = { name = "Git" }
 end
 

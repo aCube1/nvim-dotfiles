@@ -50,6 +50,8 @@ function loader.initialize()
 
 	if packer_exists then
 		local packer = require("packer")
+		local run_me, _ = loadfile(compile_path)
+		run_me()
 		packer.init(init_cfg)
 		require("core.plugins")
 	end
@@ -62,7 +64,7 @@ function loader.load(plugins)
 	packer.reset()
 	packer.startup({
 		function(use)
-			use("wbthomason/packer.nvim") -- Install by default	
+			use("wbthomason/packer.nvim") -- Install by default
 			for _, plugin in ipairs(plugins) do
 				use(plugin)
 			end

@@ -1,4 +1,4 @@
-_G.utils = {}
+utils = {}
 
 function utils.safe_require(path)
 	local status_ok, module = pcall(require, path)
@@ -10,9 +10,8 @@ function utils.safe_require(path)
 	return module
 end
 
-function utils.is_plugin_available(plugin)
-	return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
-end
+function utils.is_plugin_available(plugin) return packer_plugins ~= nil and packer_plugins[plugin] ~= nil end
+
 -- Get highlight properties for given highlight name
 function utils.get_hlgroup(name, fallback)
 	if vim.fn.hlexists(name) == 1 then
@@ -29,6 +28,25 @@ function utils.get_hlgroup(name, fallback)
 		return hl
 	else
 		return fallback
+	end
+end
+
+function utils.set_mappings(map_table)
+	for mode, keymaps in pairs(map_table) do
+		for keymap, options in pairs(keymaps) do
+			if options then
+				local command = options
+				local keymap_opts = {}
+
+				if type(options) == "table" then
+					command = options[1] -- The first index is always the command
+					keymap_opts = options
+					keymap_opts[1] = nil
+				end
+
+				vim.keymap.set(mode, keymap, command, keymap_opts)
+			end
+		end
 	end
 end
 
@@ -80,3 +98,8 @@ end
 function utils.initialize_icons()
 	utils.icons = require("core.icons")
 end
+
+-- Setup modules
+require("core.utils.lsp")
+
+return utils

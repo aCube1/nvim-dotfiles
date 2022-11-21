@@ -1,4 +1,4 @@
-vim.cmd("packadd whichkey.nvim")
+--vim.cmd("packadd whichkey.nvim")
 local which_key = require("which-key")
 
 if which_key then
@@ -14,5 +14,5 @@ if which_key then
 		disable = {
 			filetypes = { "TelescopePrompt" }
 		},
-	})	
+	})
 end

@@ -1,8 +1,6 @@
 -- Lazy loading
 local status_ok, impatient = pcall(require, "impatient")
-if status_ok then
-	impatient.enable_profile()
-end
+if status_ok then impatient.enable_profile() end
 
 for _, source in ipairs({
 	"core.utils",

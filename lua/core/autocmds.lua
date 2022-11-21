@@ -1,16 +1,24 @@
 local is_plugin_available = utils.is_plugin_available
-local cmd = vim.cmd
+local cmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 -- Reload config
-cmd([[
+vim.cmd([[
   augroup packer_config
 		autocmd!
 		autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 	augroup end
 ]])
 
+cmd("FileType", {
+  desc = "Unlist quickfist buffers",
+  group = augroup("unlist_quickfist", { clear = true }),
+  pattern = "qf",
+  callback = function() vim.opt_local.buflisted = false end,
+})
+
 if is_plugin_available("neo-tree.nvim") then
-  vim.api.nvim_create_autocmd("BufEnter", {
+  cmd("BufEnter", {
     desc = "Open Neo-Tree on startup with directory",
     group = augroup("neotree_start", { clear = true }),
     callback = function()
